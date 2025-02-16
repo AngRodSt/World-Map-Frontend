@@ -26,7 +26,8 @@ const Worldmap = () => {
     useEffect(() => {
         async function fechData() {
             try {
-                const response = await axios('/world.geojson');
+                const url = 'https://r2.datahub.io/clvyjaryy0000la0cxieg4o8o/main/raw/data/countries.geojson'
+                const response = await axios(url);
                 setGeoData(response.data)
 
             } catch (error) {
@@ -35,8 +36,6 @@ const Worldmap = () => {
         }
         fechData();
     }, [])
-
-
 
     const handleAccept = (newColor) => {
         let selectedId = null
