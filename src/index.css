@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.roboto-slab {
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.covered-by-your-grace-regular {
+  font-family: "Covered By Your Grace", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@layer utilities {
+  .shadow-text-black {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.country-label {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  text-shadow: 1px 1px 2px white;
+}
