@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Button = ({text}) => {
   return (
     <StyledWrapper>
-      <button 
+      <button className='poiret-one-regular'
       type='submit'>
         <span>{text}</span>
       </button>
@@ -20,12 +20,12 @@ const StyledWrapper = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    background: #172554;
-    font-family: "Montserrat", sans-serif;
+    background: black;
+    
     box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     cursor: pointer;
-    border: none;
+    border: 1px solid #ffbf00;
   }
 
   button:after {

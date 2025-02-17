@@ -47,7 +47,7 @@ const Note = ({ note, }) => {
     return (
         <>
            
-            <div data-aos="flip-right" className=" bg-gray-100 rounded-lg  overflow-hidden transition ease-in-out" style={{
+            <div data-aos="flip-right" className=" bg-gray-800 rounded-lg  overflow-hidden transition ease-in-out" style={{
                 boxShadow: 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset',
             }}>
                 <div className="   grid grid-cols-1 grid-rows-1 relative w-full h-full overflow-hidden">

@@ -44,15 +44,15 @@ const Login = () => {
   return (
     <>
     {msg && <Alert alert={alert} />}
-    <form onSubmit={handleSubmit} className="w-full roboto-slab">
+    <form onSubmit={handleSubmit} className="w-full mt-5 ">
             <div>
               <label htmlFor="email"
                 className="font-bold text-white text-xl block">
-                Email
+                E-mail
               </label>
               <input id="email" type="email"
                 className="border p-3 mt-3 w-full bg-gray-50 rounded-lg"
-                placeholder="Email" autoComplete="username"
+                placeholder="E-mail" autoComplete="username"
                 value={email}
                 onChange={(e)=> setEmail(e.target.value)} />
             </div>
