@@ -32,7 +32,7 @@ const WorldMapProvider = ({ children }) => {
                 setCountrys(data);
 
             } catch (error) {
-                console.log(error.response.data.msg)
+                // console.log(error.response.data.msg)
             }
         }
         getCountrys();

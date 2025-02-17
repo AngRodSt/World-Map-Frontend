@@ -50,11 +50,6 @@ const Register = () => {
     } catch (error) {
       setAlert({ msg: error.response.data.msg, error: true })
     }
-
-
-
-
-
   }
 
   const { msg } = alert

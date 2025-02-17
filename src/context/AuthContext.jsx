@@ -29,7 +29,6 @@ const AuthProvider = ({children}) => {
                 setAuth(data.user)
 
             } catch (error) {
-                console.log(error.response.data.msg)
                 setAuth({})
             }
             setCharging(false)
