@@ -16,6 +16,14 @@
   font-style: normal;
 }
 
+
+.poiret-one-regular {
+  font-family: "Poiret One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 @layer utilities {
   .shadow-text-black {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);

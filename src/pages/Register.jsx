@@ -14,21 +14,21 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if([name, email, password, repeatPassword].includes('')){
+    if ([name, email, password, repeatPassword].includes('')) {
       return setAlert({
         msg: 'All field are mandatory',
         error: true
       })
     }
 
-    if(password !== repeatPassword){
+    if (password !== repeatPassword) {
       return setAlert({
         msg: 'The passwords are differents',
         error: true
       })
     }
 
-    if(password.length < 6){
+    if (password.length < 6) {
       return setAlert({
         msg: 'The password is too short',
         error: true
@@ -36,10 +36,10 @@ const Register = () => {
     }
 
     setAlert({})
-    
+
     try {
-      await axiosClient.post('/', {name, email, password} )
-      setAlert({msg: 'User created Successfully! Verify your email'})
+      await axiosClient.post('/', { name, email, password })
+      setAlert({ msg: 'User created Successfully! Verify your email' })
       setTimeout(() => {
         setName("")
         setEmail("")
@@ -51,17 +51,17 @@ const Register = () => {
       setAlert({ msg: error.response.data.msg, error: true })
     }
 
-   
-    
 
-    
+
+
+
   }
 
-  const {msg} = alert
+  const { msg } = alert
   return (
     <>
-    {msg && <Alert alert={alert}/>}
-      <form onSubmit={handleSubmit} className="w-full roboto-slab">
+      {msg && <Alert alert={alert} />}
+      <form onSubmit={handleSubmit} className="w-full">
         <div>
           <label htmlFor="name"
             className="font-bold text-white text-xl block">
@@ -73,7 +73,7 @@ const Register = () => {
             value={name}
             onChange={(e) => setName(e.target.value)} />
         </div>
-        <div>
+        <div className="mt-4">
           <label htmlFor="email"
             className="font-bold text-white text-xl block">
             Email
@@ -82,7 +82,7 @@ const Register = () => {
             className="border p-3 mt-3 w-full bg-gray-50 rounded-lg"
             placeholder="Email" autoComplete="username"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}/>
+            onChange={(e) => setEmail(e.target.value)} />
         </div>
 
         <div className="mt-4">
@@ -106,14 +106,14 @@ const Register = () => {
             className="border p-3 mt-3 w-full bg-gray-50 rounded-lg"
             placeholder="Repeat Password" autoComplete="current-password"
             value={repeatPassword}
-            onChange={(e) => setRepeatPassword(e.target.value)}/>
+            onChange={(e) => setRepeatPassword(e.target.value)} />
         </div>
         {/* <div className={`${charging? "flex" : " hidden" } items-center flex-col justify-center  mt-10`}>
               <span className="loader"></span>
             </div> */}
         <div className="mt-10">
-          <Button text={'Register'}/>
-          
+          <Button text={'Register'} />
+
 
         </div>
 

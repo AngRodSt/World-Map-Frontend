@@ -36,6 +36,7 @@ const ModalStructure = ({ modalIsOpen, setModalIsOpen, countryName, countryCode,
         onRequestClose={handleCloseModal}
         contentLabel="Paleta de Colores"
         shouldCloseOnOverlayClick={false}
+        className={''}
         style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -56,19 +57,20 @@ const ModalStructure = ({ modalIsOpen, setModalIsOpen, countryName, countryCode,
           }
         }}
       >
+        <div className=" overflow-y-auto sm:max-h-[50rem] max-h-[30rem] ">
         <StyledWrapper>
-          <div className="flex justify-end pr-5 ">
-            <button className="exit-button" onClick={handleCloseModal}>
+          <div className="absolute right-0 mr-1 top-2 ">
+            <button className="exit-button " onClick={handleCloseModal}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 162 162" className="svgIconCross">
                 <path strokeLinecap="round" strokeWidth={17} stroke="black" d="M9.01074 8.98926L153.021 153" />
                 <path strokeLinecap="round" strokeWidth={17} stroke="black" d="M9.01074 153L153.021 8.98926" />
               </svg>
             </button>
           </div>
-          <div className="flex md:flex-row flex-col gap-5 px-4 w-auto justify-center items-center">
-            <div className="w-1/2">
+          <div className="flex md:flex-row flex-col gap-5 px-4 w-auto justify-center items-center ">
+            <div className="sm:w-1/2 w-full">
               <h1 className="text-center font-bold text-xl">{countryName}</h1>
-              <MapContainer className="md:block hidden" center={[34, 66]} zoom={5} style={{ height: "300px", width: "100%" }} >
+              <MapContainer className="" center={[34, 66]} zoom={5} style={{ height: "300px", width: "100%" }} >
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -92,6 +94,7 @@ const ModalStructure = ({ modalIsOpen, setModalIsOpen, countryName, countryCode,
           </div>
           <NoteModal countryCode={countryCode} countryName={countryName} />
         </StyledWrapper>
+        </div>
       </Modal >
     </>
   )
@@ -137,11 +140,11 @@ const StyledWrapper = styled.div`
   }
   .exit-button {
    
-    top: 17px;
-    right: 17px;
+    top: 0px;
+    right: 0px;
     width: 20px;
     height: 20px;
-    display: flex;
+    display: fixed;
     align-items: center;
     justify-content: center;
     background-color: transparent;

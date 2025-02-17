@@ -1,9 +1,9 @@
 
 const Footer = () => {
   return (
-    <div className=" relative flex justify-center pt-2items-center bottom-0 ">
-        <h3 className="roboto-slab">AngRodSt @copyright</h3>
-    </div>
+    <footer className=" poiret-one-regular fixed z-9999 bottom-2 left-0 w-full text-white text-center   ">
+        <h3 className=" font-bold">AngRodSt @copyright</h3>
+    </footer>
   )
 }
 

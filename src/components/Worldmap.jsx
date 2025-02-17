@@ -114,10 +114,13 @@ const Worldmap = () => {
 
     return (
         <>
-            <div id='map' className='' style={{ width: "100%", height: "50rem" }}>
+            <div id="map" style={{ width: "100%" }}
+                className="h-[25rem] md:h-[45rem] lg:h-[50rem]">
+
                 <MapContainer className='' center={[40.505, -0.09]} zoom={2.8} maxBounds={bounds} maxBoundsViscosity={1.0} scrollWheelZoom={false} style={{
                     width: "100%", height: "100%",
-                    boxShadow: ""
+                    boxShadow: "rgba(250, 250, 250, 1) 0px 0px 35px 10px, rgba(250, 250, 0, 0.06) 0px 1px 0px 1px"
+
                 }} >
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

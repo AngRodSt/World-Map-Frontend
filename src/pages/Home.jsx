@@ -14,11 +14,13 @@ const Home = () => {
 
   return (
     <>
-      <Header />
-      <div className="flex mx-auto  justify-center">
-        <Worldmap />
-      </div>
-      <Footer />
+      <main className=" absolute poiret-one-regular inset-0 h-full bg-[url(/backgroud1.jpg)] bg-cover bg-no-repeat bg-fixed filter ">
+        <Header />
+        <div className="flex justify-center items-center mt-10 md:mt-0">
+          <Worldmap />
+        </div>
+        <Footer />
+      </main>
     </>
   )
 }
