@@ -18,7 +18,6 @@ const ConfirmAccount = () => {
             try {
                 const url = `/confirm/${token}`
                 const { data } = await axiosClient(url)
-                console.log(data.url)
                 setVerified(true)
                 setAlert({ msg: data.url })
             } catch (error) {

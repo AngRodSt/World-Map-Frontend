@@ -26,8 +26,6 @@ const NoteModal = ({countryName, countryCode, setIsOpen}) => {
       },[countryName])
 
 
-    console.log(note)
-
     const handleChangeTextArea = (e) => {
         const inputText = e.target.value;
         const words = inputText.trim().split(/\s+/).filter(Boolean);
