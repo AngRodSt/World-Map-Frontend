@@ -34,7 +34,7 @@ This is a web app that allows users to interact with a world map, select countri
 
 ## Setup Instructions
 
-Please refer to the CONTRIBUTING.md file for setup instructions.
+Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for setup instructions.
 
 ## License
 
