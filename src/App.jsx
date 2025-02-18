@@ -1,3 +1,10 @@
+/*
+Copyright (C) 2025 Sthefany Angeles
+Licensed under the Apache License, Version 2.0
+See LICENSE file for details.
+*/
+
+
 import Home from "./pages/Home"
 import Notes from "./pages/Notes"
 import Login from "./pages/Login"

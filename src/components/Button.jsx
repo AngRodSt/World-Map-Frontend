@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({text}) => {
+const Button = ({ text }) => {
   return (
     <StyledWrapper>
       <button className='poiret-one-regular'
-      type='submit'>
+        type='submit'>
         <span>{text}</span>
       </button>
     </StyledWrapper>
