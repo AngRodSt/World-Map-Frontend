@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext } from "react";
 import axiosClient from "../config/axios";
-import useWorldMap from "../hooks/useWorldMap";
 
 const AuthContext = createContext()
 
