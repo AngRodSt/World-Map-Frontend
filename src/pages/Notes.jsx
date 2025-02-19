@@ -3,7 +3,7 @@ import Footer from "../components/Footer"
 import useWorldMap from "../hooks/useWorldMap"
 import Note from "../components/NoteBody"
 import { useEffect, useState } from "react"
-import NoteModal from "../components/NoteModal"
+import ConfirmModal from "../components/ConfirmModal"
 
 
 
