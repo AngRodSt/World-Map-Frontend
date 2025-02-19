@@ -49,17 +49,19 @@ const ModalStructure = ({ modalIsOpen, setModalIsOpen, countryName, countryCode,
             height: "fit-content",
             maxWidth: "700px",
             margin: 'auto',
+            padding:'10px',
             backgroundColor: " rgb(255, 250, 250)",
             borderRadius: "10px",
             border: "1px solid rgb(206, 206, 206)",
             fontFamily: "Arial, Helvetica, sans-serif",
             boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.066)"
+            
           }
         }}
       >
-        <div className=" overflow-y-auto sm:max-h-[50rem] max-h-[30rem] ">
+        <div className="overflow-y-auto sm:max-h-[50rem] max-h-[30rem] p-4 [direction:rtl]">
         <StyledWrapper>
-          <div className="absolute right-0 mr-1 top-2 ">
+          <div className="absolute right-0 mr-2 top-2 [direction:ltr]">
             <button className="exit-button " onClick={handleCloseModal}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 162 162" className="svgIconCross">
                 <path strokeLinecap="round" strokeWidth={17} stroke="black" d="M9.01074 8.98926L153.021 153" />
@@ -67,7 +69,7 @@ const ModalStructure = ({ modalIsOpen, setModalIsOpen, countryName, countryCode,
               </svg>
             </button>
           </div>
-          <div className="flex md:flex-row flex-col gap-5 px-4 w-auto justify-center items-center ">
+          <div className="[direction:ltr] flex md:flex-row flex-col gap-5 px-4 w-auto justify-center items-center ">
             <div className="sm:w-1/2 w-full">
               <h1 className="text-center font-bold text-xl">{countryName}</h1>
               <MapContainer className="" center={[34, 66]} zoom={5} style={{ height: "300px", width: "100%" }} >
@@ -92,7 +94,10 @@ const ModalStructure = ({ modalIsOpen, setModalIsOpen, countryName, countryCode,
               </div>
             </div>
           </div>
+          <div className="[direction:ltr]">
           <NoteModal countryCode={countryCode} countryName={countryName} />
+          </div>
+          
         </StyledWrapper>
         </div>
       </Modal >
@@ -133,7 +138,8 @@ const StyledWrapper = styled.div`
     color: rgb(34, 34, 34);
   }
   .accept:hover {
-    background-color: rgb(0, 0, 0);
+    background-color:  #FFC000;
+;
   }
   .reject:hover {
     background-color: #ddd;

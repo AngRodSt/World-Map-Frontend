@@ -10,6 +10,7 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
+  const [buttonClicked, setButtonClicked] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +37,7 @@ const Register = () => {
     }
 
     setAlert({})
-
+    setButtonClicked(true)
     try {
       await axiosClient.post('/', { name, email, password })
       setAlert({ msg: 'User created Successfully! Verify your email' })
@@ -50,6 +51,7 @@ const Register = () => {
     } catch (error) {
       setAlert({ msg: error.response.data.msg, error: true })
     }
+    setButtonClicked(false)
   }
 
   const { msg } = alert
@@ -103,13 +105,8 @@ const Register = () => {
             value={repeatPassword}
             onChange={(e) => setRepeatPassword(e.target.value)} />
         </div>
-        {/* <div className={`${charging? "flex" : " hidden" } items-center flex-col justify-center  mt-10`}>
-              <span className="loader"></span>
-            </div> */}
         <div className="mt-10">
-          <Button text={'Register'} />
-
-
+          <Button text={'Register'} setButtonClicked={buttonClicked} />
         </div>
 
         <nav className="mt-2 lg:flex lg:justify-between">

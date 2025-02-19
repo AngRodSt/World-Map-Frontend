@@ -1,11 +1,13 @@
 import { useState, useEffect, createContext } from "react";
 import axiosClient from "../config/axios";
+import useWorldMap from "../hooks/useWorldMap";
 
 const AuthContext = createContext()
 
 const AuthProvider = ({children}) => {
     const [auth, setAuth] = useState({});
     const [charging, setCharging] = useState(true)
+    
 
 
     useEffect(()=>{
@@ -39,8 +41,9 @@ const AuthProvider = ({children}) => {
     },[])
 
     const logOut = ()=>{
-        setAuth({})
         localStorage.removeItem('MapToken')
+        setAuth({})
+        
     }
 
     return(

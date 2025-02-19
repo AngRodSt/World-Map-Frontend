@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 import Alert from "./Alert";
 import useWorldMap from "../hooks/useWorldMap";
+import Button from "./Button";
 
 
 
 
 const NoteModal = ({countryName, countryCode, setIsOpen}) => {
     const [alert, setAlert] = useState([])
-    const [isHovered, setIsHovered] = useState(false);
     const { saveNote, note, setNote } = useWorldMap()
     const { country, message, name, code, _id } = note
     const MAX_WORDS = 50;
@@ -19,6 +19,8 @@ const NoteModal = ({countryName, countryCode, setIsOpen}) => {
         id: _id || null
 
     })
+    const [buttonClicked, setButtonClicked] = useState(false)
+
     
 
     useEffect(()=>{
@@ -50,6 +52,7 @@ const NoteModal = ({countryName, countryCode, setIsOpen}) => {
           return
         }
         setAlert({})
+        setButtonClicked(true)
         try {
           await saveNote(noteLocal)
           setAlert({
@@ -59,6 +62,7 @@ const NoteModal = ({countryName, countryCode, setIsOpen}) => {
         } catch (error) {
           console.log(error.response)
         }
+        setButtonClicked(false)
         
         setTimeout(() => {
           setAlert({})
@@ -66,10 +70,11 @@ const NoteModal = ({countryName, countryCode, setIsOpen}) => {
           if(setIsOpen){
             setIsOpen(false)
           }
+          setNote({})
         }, 1000);
 
         
-        setNote({})
+        
     
       }
     
@@ -86,11 +91,9 @@ const NoteModal = ({countryName, countryCode, setIsOpen}) => {
                         resize: 'none'
                     }}></textarea>
                     <p className="text-gray-400 mb-4 text-sm">Words: {wordCount}/{MAX_WORDS}</p>
-                    <button type="submit" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} className=" text-white hover:bg-gray-950 font-bold uppercase p-3 rounded-lg" style={{
-                        backgroundColor: isHovered ? 'rgb(0, 0, 0)' : 'rgb(34, 34, 34)',
-                    }}>Add Note</button>
+                    <Button type="submit" text={`${Object.keys(note).length? 'Edit Note' : 'Add Note'}`} setButtonClicked={buttonClicked}/>
                 </form>
-                {msg && <Alert alert={alert} />}
+                {msg && <Alert alert={alert}  />}
             </div>
         </>
     )
