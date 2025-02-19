@@ -47,8 +47,6 @@ const WorldMapProvider = ({ children }) => {
                 Authorization: `Bearer ${token}`
             }
         }
-
-
             try {
                 const { data } = await axiosClient('/notes', config)
                 setNotes(data);
@@ -175,7 +173,7 @@ const WorldMapProvider = ({ children }) => {
 
     
     return (
-        <WorldMapContext.Provider value={{ countrys, setCountry, saveCountry, deleteCountry, editNote, note, setNote, notes, saveNote, deleteNote }}>
+        <WorldMapContext.Provider value={{ countrys, setNotes, setCountry, saveCountry, deleteCountry, editNote, note, setNote, notes, saveNote, deleteNote }}>
             {children}
         </WorldMapContext.Provider>
     )

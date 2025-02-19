@@ -3,6 +3,9 @@ import useWorldMap from "../hooks/useWorldMap"
 import NoteModal from "./NoteModal"
 import styled from 'styled-components';
 import Modal from "react-modal";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; 
+
 
 
 const Note = ({ note, }) => {
@@ -18,6 +21,13 @@ const Note = ({ note, }) => {
 
      useEffect(() => {
         Modal.setAppElement('#root');
+      }, []);
+
+      useEffect(() => {
+        AOS.init({
+          duration: 1000, 
+          once: false,
+        });
       }, []);
 
     const formatDate = (date) => new Date(date).toISOString().split('T')[0];
@@ -47,7 +57,7 @@ const Note = ({ note, }) => {
     return (
         <>
            
-            <div data-aos="flip-right" className=" bg-gray-800 rounded-lg  overflow-hidden transition ease-in-out" style={{
+            <div data-aos="fade-up" className=" bg-gray-800 rounded-lg  overflow-hidden transition ease-in-out" style={{
                 boxShadow: 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset',
             }}>
                 <div className="   grid grid-cols-1 grid-rows-1 relative w-full h-full overflow-hidden">
@@ -77,7 +87,7 @@ const Note = ({ note, }) => {
                                 </div>
                             </div>
                             <div className="absolute bottom-3 left-2 gap-3 flex flex-row w-full z-10">
-                                <button onClick={handleEditClick} className=" shadow-lg bg-gray-900 p-1 w-1/4 rounded-2xl text-white " >Edit</button>
+                                <button onClick={handleEditClick} className=" shadow-lg bg-gray-900 p-1 w-1/4 rounded-md text-white hover:bg-amber-400 hover:scale-105 transition-transform ease-in-out" >Edit</button>
                             </div>
                         </div>
                     </div>

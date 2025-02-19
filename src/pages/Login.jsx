@@ -11,25 +11,27 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [alert, setAlert] = useState('')
+  const [buttonClicked, setButtonClicked] = useState(false)
   const navigate = useNavigate()
 
   const {auth, setAuth} = useAuth()
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
-
+    
     if([email, password].includes('')){
       return setAlert({
         msg: 'All field are mandatory',
         error: true
       })
     }
-
+    setButtonClicked(true)
     try {
       const url = '/login'
       const {data} = await axiosClient.post(url, {email, password})
       localStorage.setItem('MapToken', data.token)
       setAuth(data)
+      
       navigate('/worldmap')
     } catch (error) {
       setAlert({
@@ -37,6 +39,7 @@ const Login = () => {
         error: true
       })
     }
+    setButtonClicked(false)
   }
 
   const {msg} = alert
@@ -68,11 +71,11 @@ const Login = () => {
                 value={password}
                 onChange={(e)=> setPassword(e.target.value)} />
             </div>
-            {/* <div className={`${charging? "flex" : " hidden" } items-center flex-col justify-center  mt-10`}>
-              <span className="loader"></span>
-            </div> */}
+             <div className={` items-center flex-col justify-center  mt-10`}>
+              
+            </div> 
             <div className="mt-10">
-              <Button text={"Login"}/>
+              <Button text={"Login"} setButtonClicked={buttonClicked}/>
 
             </div>
 

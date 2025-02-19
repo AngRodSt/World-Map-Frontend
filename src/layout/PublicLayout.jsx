@@ -3,7 +3,7 @@ import { Outlet } from "react-router"
 const PublicLayout = () => {
   return (
     <>
-      <main className=" absolute poiret-one-regular inset-0 h-full bg-[url(/backgroud1.jpg)] bg-cover bg-no-repeat bg-fixed filter transition-opacity ">
+      <main className=" absolute poiret-one-regular w-full min-h-screen bg-[url(/backgroud1.jpg)] bg-cover bg-no-repeat bg-fixed filter transition-opacity ">
         <div className=" absolute  flex md:flex-row flex-col inset-0 bg-gradient-to-r from-black/70 bg-cover bg-no-repeat bg-fixed filter transition-opacity ">
           <div className="hidden md:block md:w-1/2 lg:w-2/3 ">
             <div className=" text-white flex flex-col justify-end  h-screen px-10 pb-32 ">

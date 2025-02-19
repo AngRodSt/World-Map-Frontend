@@ -1,12 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ text }) => {
+
+const Button = ({ text, setButtonClicked }) => {
+
   return (
-    <StyledWrapper>
-      <button className='poiret-one-regular'
-        type='submit'>
-        <span>{text}</span>
+    <StyledWrapper >
+      <button className={`poiret-one-regular ${setButtonClicked? 'after:bg-amber-200 bg-amber-200' : 'after:bg-amber-400'} `}
+        type='submit' disabled={setButtonClicked}>
+
+        <span className='flex justify-center items-center gap-5 '>
+          {setButtonClicked && (
+            <div className="sk-fading-circle">
+              <div className="sk-circle1 sk-circle"></div>
+              <div className="sk-circle2 sk-circle"></div>
+              <div className="sk-circle3 sk-circle"></div>
+              <div className="sk-circle4 sk-circle"></div>
+              <div className="sk-circle5 sk-circle"></div>
+              <div className="sk-circle6 sk-circle"></div>
+              <div className="sk-circle7 sk-circle"></div>
+              <div className="sk-circle8 sk-circle"></div>
+              <div className="sk-circle9 sk-circle"></div>
+              <div className="sk-circle10 sk-circle"></div>
+              <div className="sk-circle11 sk-circle"></div>
+              <div className="sk-circle12 sk-circle"></div>
+            </div>
+          )}
+          {text}
+        </span>
       </button>
     </StyledWrapper>
   );
@@ -17,10 +38,11 @@ const StyledWrapper = styled.div`
     position: relative;
     display: flex;
     width: 100%;
+    background: black;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    background: black;
+    
     
     box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -29,10 +51,9 @@ const StyledWrapper = styled.div`
   }
 
   button:after {
-    content: " ";
-    width: 10%;
+    content: "";
+    width: 0%;
     height: 100%;
-    background: #ffbf00;
     position: absolute;
     transition: all 0.4s ease-in-out;
     right: 0;
@@ -44,11 +65,11 @@ const StyledWrapper = styled.div`
     width: 100%;
   }
 
-  button span {
+  button span, {
     text-align: center;
     text-decoration: none;
     width: 100%;
-    padding: 18px 25px;
+    padding: 15px 0px;
     color: #fff;
     font-size: 1.125em;
     font-weight: 700;
@@ -57,7 +78,7 @@ const StyledWrapper = styled.div`
     transition: all 0.3s ease-in-out;
   }
 
-  button:hover span {
+  button:hover span, div {
     color: #183153;
     animation: scaleUp 0.3s ease-in-out;
   }
