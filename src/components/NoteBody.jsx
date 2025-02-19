@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Modal from "react-modal";
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
+import ConfirmModal from "./ConfirmModal";
 
 
 
@@ -13,6 +14,7 @@ const Note = ({ note, }) => {
     const { country, date, message, name, code, _id } = note
     const { deleteNote, editNote, setNote } = useWorldMap();
     const [isOpen, setIsOpen] = useState(false)
+    const [confirmIsOpen, setConfirmIsOpen] = useState(false)
 
     const handleCloseModal = ()=>{
         setIsOpen(false)
@@ -43,9 +45,7 @@ const Note = ({ note, }) => {
         getFlag()
     }, [])
 
-    const handleDeleteClick = () => {
-        deleteNote(_id)
-    }
+    
 
     const handleEditClick = () => {
         editNote(note)
@@ -61,12 +61,7 @@ const Note = ({ note, }) => {
                 boxShadow: 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset',
             }}>
                 <div className="   grid grid-cols-1 grid-rows-1 relative w-full h-full overflow-hidden">
-                    <button className="absolute w-3 flex top-2 right-2" onClick={handleDeleteClick} >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 162 162" className="svgIconCross">
-                            <path strokeLinecap="round" strokeWidth={17} stroke="black" d="M9.01074 8.98926L153.021 153" />
-                            <path strokeLinecap="round" strokeWidth={17} stroke="black" d="M9.01074 153L153.021 8.98926" />
-                        </svg>
-                    </button>
+                    
                     <div >
 
                         <div className="m-4 flex items-center gap-5">
@@ -86,13 +81,15 @@ const Note = ({ note, }) => {
 
                                 </div>
                             </div>
-                            <div className="absolute bottom-3 left-2 gap-3 flex flex-row w-full z-10">
-                                <button onClick={handleEditClick} className=" shadow-lg bg-gray-900 p-1 w-1/4 rounded-md text-white hover:bg-amber-400 hover:scale-105 transition-transform ease-in-out" >Edit</button>
+                            <div className="absolute bottom-3 gap-3 flex flex-row w-full z-10">
+                                <button onClick={handleEditClick} className=" shadow-lg bg-gray-900 p-1 mx-2 w-1/2 rounded-md text-white hover:bg-black hover:scale-105 transition-transform ease-in-out" >Edit</button>
+                                <button onClick={()=> setConfirmIsOpen(true)} className=" shadow-lg bg-amber-400 p-1 mx-2 w-1/2 rounded-md  hover:bg-amber-500 hover:scale-105 transition-transform ease-in-out" >Delete</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {confirmIsOpen && <ConfirmModal onClose={()=> setConfirmIsOpen(false)} onConfirmDelete={()=> deleteNote(_id)}/>}
             <Modal
                 isOpen={isOpen}
                 onRequestClose={handleCloseModal}
@@ -119,15 +116,15 @@ const Note = ({ note, }) => {
                 }}
             >
                 <button className="absolute w-3 flex top-2 right-2" onClick={handleCloseModal} >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 162 162" className="svgIconCross">
+                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 162 162" className="svgIconCross">
                             <path strokeLinecap="round" strokeWidth={17} stroke="black" d="M9.01074 8.98926L153.021 153" />
                             <path strokeLinecap="round" strokeWidth={17} stroke="black" d="M9.01074 153L153.021 8.98926" />
                         </svg>
                     </button>
                
                 {<NoteModal setIsOpen={setIsOpen} />}
-                
             </Modal >
+           
         </>
     )
 }
