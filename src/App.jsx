@@ -5,17 +5,18 @@ See LICENSE file for details.
 */
 
 
-import Home from "./pages/Home"
-import Notes from "./pages/Notes"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import ConfirmAccount from "./pages/ConfirmAccount"
+import Home from "./pages/private/Home"
+import Notes from "./pages/private/Notes"
+import Login from "./pages/public/Login"
+import Register from "./pages/public/Register"
+import ConfirmAccount from "./pages/public/ConfirmAccount"
 import { AuthProvider } from "./context/AuthContext"
 import { WorldMapProvider } from "./context/WorldMapContext"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import PublicLayout from "./layout/PublicLayout"
 import MainLayout from "./layout/MainLayout"
+import Profile from "./pages/private/Profile"
 
 
 
@@ -37,6 +38,11 @@ function App() {
               {<Route index element={<Home />} />}
               {<Route path="notes" element={<Notes />} />}
             </Route>
+            <Route path="/worldmap/profile" element={<MainLayout/>}>
+              {<Route index element={<Profile />} />}
+              {<Route path="notes" element={<Notes />} />}
+            </Route>
+
 
           </Routes>
           </WorldMapProvider>

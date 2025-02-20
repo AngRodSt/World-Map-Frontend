@@ -1,8 +1,8 @@
 import { Link } from "react-router"
-import Alert from "../components/Alert"
-import Button from "../components/Button"
+import Alert from "../../components/Alert"
+import Button from "../../components/Button"
 import { useState } from "react"
-import axiosClient from "../config/axios"
+import axiosClient from "../../config/axios"
 
 const Register = () => {
   const [alert, setAlert] = useState({})

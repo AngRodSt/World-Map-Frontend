@@ -1,8 +1,8 @@
-import Header from "../components/Header"
+import Header from "../../components/Header"
 import Modal from "react-modal";
 import { useEffect } from "react";
-import Footer from "../components/Footer"
-import Worldmap from "../components/Worldmap"
+import Footer from "../../components/Footer"
+import Worldmap from "../../components/Worldmap"
 
 
 
