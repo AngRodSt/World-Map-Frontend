@@ -119,7 +119,7 @@ const Worldmap = () => {
 
                 <MapContainer className='' center={[40.505, -0.09]} zoom={2.8} maxBounds={bounds} maxBoundsViscosity={1.0} scrollWheelZoom={false} style={{
                     width: "100%", height: "100%",
-                    boxShadow: "rgba(250, 250, 250, 1) 0px 0px 35px 10px, rgba(250, 250, 0, 0.06) 0px 1px 0px 1px"
+                    boxShadow: "rgba(0, 0, 0, 1) 0px 0px 35px 10px, rgba(250, 250, 0, 0.06) 0px 1px 0px 1px"
 
                 }} >
                     <TileLayer
