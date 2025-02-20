@@ -1,9 +1,9 @@
-import Header from "../components/Header"
-import Footer from "../components/Footer"
-import useWorldMap from "../hooks/useWorldMap"
-import Note from "../components/NoteBody"
+import Header from "../../components/Header"
+import Footer from "../../components/Footer"
+import useWorldMap from "../../hooks/useWorldMap"
+import Note from "../../components/NoteBody"
 import { useEffect, useState } from "react"
-import ConfirmModal from "../components/ConfirmModal"
+
 
 
 

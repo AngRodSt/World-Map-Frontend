@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
-import Alert from "../components/Alert"
-import Button from "../components/Button"
+import Alert from "../../components/Alert"
+import Button from "../../components/Button"
 import { useState } from "react"
-import axiosClient from "../config/axios"
-import useAuth from "../hooks/useAuth"
+import axiosClient from "../../config/axios"
+import useAuth from "../../hooks/useAuth"
 
 
 
