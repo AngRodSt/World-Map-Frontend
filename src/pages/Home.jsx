@@ -16,7 +16,7 @@ const Home = () => {
     <>
       <main className=" absolute poiret-one-regular w-full min-h-screen bg-[url(/backgroud1.jpg)] bg-cover bg-no-repeat bg-fixed filter ">
         <Header />
-        <div className="flex justify-center items-center mt-10 md:mt-0">
+        <div className="flex justify-center items-center mt-4 md:mt-0">
           <Worldmap />
         </div>
         <Footer />

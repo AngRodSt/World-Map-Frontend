@@ -33,13 +33,14 @@ const ConfirmModal = ({ onClose, onConfirmDelete }) => {
                 </div>
             </div>
         </StyledWrapper>
-    );
+    )
 }
 
 const StyledWrapper = styled.div`
   
   .card-container {
     position: fixed;
+    z-index: 9999;
     top: 0;
     left: 0;
     padding: 5px;
