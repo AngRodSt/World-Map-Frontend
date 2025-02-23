@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty:{
+        'height': 'height',
+        'width': 'width'
+      }
+    },
   },
   plugins: [],
 }

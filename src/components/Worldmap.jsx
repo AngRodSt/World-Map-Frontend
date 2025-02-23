@@ -115,11 +115,10 @@ const Worldmap = () => {
     return (
         <>
             <div id="map" style={{ width: "100%" }}
-                className="h-[25rem] md:h-[45rem] lg:h-[50rem]">
+                className=" w-[90vh] h-[80vh] overflow-hidden ">
 
                 <MapContainer className='' center={[40.505, -0.09]} zoom={2.8} maxBounds={bounds} maxBoundsViscosity={1.0} scrollWheelZoom={false} style={{
                     width: "100%", height: "100%",
-                    boxShadow: "rgba(0, 0, 0, 1) 0px 0px 35px 10px, rgba(250, 250, 0, 0.06) 0px 1px 0px 1px"
 
                 }} >
                     <TileLayer

@@ -1,139 +1,173 @@
-import Footer from "../../components/Footer"
-import Header from "../../components/Header"
-import { useState } from "react"
-
+import useAuth from "../../hooks/useAuth"
+import { useEffect, useState } from "react"
+import Button from "../../components/Button"
+import Alert from "../../components/Alert"
 const Profile = () => {
 
+    const { auth, updateProfile } = useAuth()
     const [alert, setAlert] = useState({})
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [repeatPassword, setRepeatPassword] = useState('')
+    const [avatarExist, setAvatarExist] = useState(false)
+
+    useEffect(() => {
+        const watchAvatar = () => {
+            if (auth.avatar) {
+                setAvatarExist(true)
+            }
+        }
+        watchAvatar()
+
+    }, [])
+
+
+    const [profile, setProfile] = useState({
+        id: auth._id || null,
+        avatar: auth.avatar || null,
+        name: auth.name || '',
+        bio: auth.bio || '',
+        phone: auth.phone || '',
+        birthDate: auth.birthDate ? new Date(auth.birthDate).toISOString().split('T')[0] : '',
+        profession: auth.profession || ''
+    })
+
     const [buttonClicked, setButtonClicked] = useState(false)
+    const [preview, setPreview] = useState(null)
+    const [edit, setEdit] = useState(false)
+    const formData = new FormData();
 
-    return <>
 
-        <main className=" absolute w-full min-h-screen bg-[url(/backgroud1.jpg)] bg-cover bg-no-repeat bg-fixed filter ">
-            <Header />
-            <div className=" flex justify-center p-2">
-            <div className="bg-white flex item mx-10 rounded-md shadow-lg max-w-[80rem] container ">
-                <aside className="w-1/4 border pb-10 rounded-md">
-                    <h1 className="text-center text-xl font-bold my-5">User Profile</h1>
-                    <nav className="flex gap- justify-center">
-                        <div className="flex flex-col justify-center -ml-14 items-end gap-7 w-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path> </svg>
+    const handleChange = (e) => {
+        setPreview(URL.createObjectURL(e.target.files[0]))
+        setProfile({ ...profile, avatar: e.target.files[0] })
+        setAvatarExist(false)
 
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="1"> <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path> </svg>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="1"> <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path> </svg>
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        for (let key in profile) {
+            formData.append(key, profile[key])
+        }
+        try {
+            setButtonClicked(true)
+            await updateProfile(profile)
+            
+        } catch (error) {
+            console.log(error)
+        }
+        setAlert({
+            msg: 'User updated sucessfully'
+        })
+        setButtonClicked(false)
+        setTimeout(() => {
+            setAlert({})
+            setEdit(false)
+        }, 2000);
+    }
+
+    const { msg } = alert
+
+    return (
+
+        <>
+            <main className="container mx-auto pb-20 px-20 pt-5">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-5 ">
+                    <div className="flex flex-col sm:flex-row items-center  gap-5">
+                        <div className={`${edit ? 'hover:scale-110 ' : ''}  border w-[6rem] h-[6rem] transition-all ease-in-out duration-300  rounded-full shadow-xl bg-white overflow-hidden`}>
+                            <label htmlFor="avatar" className="w-[6rem] h-[6rem] flex justify-center items-center">
+                                {avatarExist ?
+                                    <img src={`data:${profile.avatar.contentType};base64,${profile.avatar.data}`} /> : preview ? <img src={preview} alt="" className={`${edit ? 'opacity-50' : ''} hover:opacity-100 transition-all ease-out`} /> : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke='black' strokeLinecap="round" strokeLinejoin="round" width="48" height="48" strokeWidth="2"> <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path> </svg>}
+
+
+                            </label>
                         </div>
-                        <div className="flex flex-col  items-start gap-5 w-full">
-                            <button className=" text-start w-full p-1 border-r-4 border-amber-400 ">User info</button>
-                            <button className="text-gray-400 text-start w-full p-1 ">Favorites</button>
-                            <button className="text-gray-400 text-start w-full p-1">Setting</button>
+                        <input
+                            type="file"
+                            disabled={edit ? false : true}
+                            id="avatar"
+                            name="avatar"
+                            accept=".jpg, .jpeg, .png"
+                            className="hidden"
+                            onChange={handleChange} />
 
-                        </div>
-
-
-                    </nav>
-                </aside>
-                <section className="w-3/4  p-20  ">
-                    <div className="flex gap-5">
-                        <div className="border  p-4 rounded-full shadow-xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" width='4rem' height='4rem' viewBox="0 0 448 512"><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" /></svg>
-                        </div>
-                        <div className=" flex flex-col justify-center">
-                            <h2>Sthefany Angeles Rodriguez</h2>
-                            <p className="text-sm text-gray-400">Software Engineer</p>
+                        <div className=" flex flex-col justify-center sm:items-start items-center">
+                            <h2>{profile.name}</h2>
+                            <p className="text-sm text-gray-400">{profile.profession}</p>
                         </div>
                     </div>
 
+                    <button className="border   bg-amber-400 hover:bg-gray-700 p-4 rounded-full mr-0 sm:mr-4 hover:scale-110 transition-transform ease-in-out" onClick={() => setEdit(true)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" width="20" height="20" strokeWidth="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> </svg>                     </button>
+                </div>
 
-                    <div className="mt-10 flex ">
-                        <form  className="w-full ">
-                            <div className="mb-4">
-                            <label htmlFor="bio"
-                                    className="font-bold block">
-                                    Bio
-                                </label>
-                                <textarea id="name" type="name"
-                                    className="border p-2 mt-3 w-full bg-gray-50 rounded-lg"
-                                    placeholder="Add Bio" autoComplete="username"
-                                    value={name}
-                                    rows={'2'}
-                                    onChange={(e) => setName(e.target.value)} style={{
-                                        resize: 'none'
-                                    }} />
-                            </div>
-                            <div className="flex justify-between align-middle gap-10">
+                <div className="mt-10 flex ">
+                    <form className="w-full " onSubmit={handleSubmit}>
+                        <div className="mb-4">
+                            <label htmlFor="bio" className="font-bold block"> Bio </label>
+                            <textarea id="bio" type="bio"
+                                disabled={edit ? false : true}
+                                className={`${edit ? 'bg-gray-50' : 'bg-gray-300 text-gray-500'} border p-2 mt-3 w-full rounded-lg`}
+                                placeholder="Add Bio" autoComplete="bio"
+                                value={profile.bio}
+                                rows={'2'}
+                                onChange={(e) => setProfile({ ...profile, bio: e.target.value })} style={{
+                                    resize: 'none'
+                                }} />
+                        </div>
+                        <div className="flex justify-between sm:flex-row flex-col align-middle gap-10">
                             <div className="w-full">
                                 <label htmlFor="name"
-                                    className="font-bold block">
-                                    Name
-                                </label>
+                                    className="font-bold block"> Name </label>
                                 <input id="name" type="name"
-                                    className="border p-2 mt-3 w-full bg-gray-50 rounded-lg"
+                                    disabled={edit ? false : true}
+                                    className={`${edit ? 'bg-gray-50' : 'bg-gray-300 text-gray-500'} border p-2 mt-3 w-full rounded-lg`}
                                     placeholder="Your Name" autoComplete="username"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)} />
-                            
-                            
-                                <label htmlFor="email"
-                                    className="font-bold mt-5 block">
-                                    Email
-                                </label>
-                                <input id="email" type="email"
-                                    className="border p-2 mt-3 w-full bg-gray-50 rounded-lg"
-                                    placeholder="Email" autoComplete="username"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)} />
-                           
+                                    value={profile.name}
+                                    onChange={(e) => setProfile({ ...profile, name: e.target.value })} />
+
+                                <label htmlFor="birthDate" className="font-bold block mt-5"> Birth Date </label>
+                                <input id="birthDate" type="date"
+                                    disabled={edit ? false : true}
+                                    className={`${edit ? 'bg-gray-50' : 'bg-gray-300 text-gray-500'} border p-2 mt-3 w-full rounded-lg`}
+                                    autoComplete="date"
+                                    value={profile.birthDate}
+                                    onChange={(e) => setProfile({ ...profile, birthDate: e.target.value })} />
                             </div>
 
                             <div className="w-full">
-                                <label htmlFor="tel"
-                                    className="font-bold  block">
-                                    Phone Number
-                                </label>
-                                <input id="number" type="text"
-                                    className="border p-2 mt-3 w-full bg-gray-50 rounded-lg"
-                                    placeholder="Password" autoComplete="current-password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)} />
-                           
-                                <label htmlFor="profession"
-                                    className="font-bold mt-5 block">
-                                   Profession
-                                </label>
+                                <label htmlFor="phone" className="font-bold  block"> Phone Number </label>
+                                <input id="phone" type="text"
+                                    disabled={edit ? false : true}
+                                    className={`${edit ? 'bg-gray-50' : 'bg-gray-300 text-gray-500'} border p-2 mt-3 w-full rounded-lg`}
+                                    placeholder="Phone Number" autoComplete="current-password"
+                                    value={profile.phone}
+                                    onChange={(e) => setProfile({ ...profile, phone: e.target.value })} />
+
+                                <label htmlFor="profession" className="font-bold mt-5 block"> Profession </label>
                                 <input id="profession" type="text"
-                                    className="border p-2 mt-3 w-full bg-gray-50 rounded-lg"
+                                    disabled={edit ? false : true}
+                                    className={`${edit ? 'bg-gray-50' : 'bg-gray-300 text-gray-500'} border p-2 mt-3 w-full rounded-lg`}
                                     placeholder="Profession" autoComplete="current-password"
-                                    value={repeatPassword}
-                                    onChange={(e) => setRepeatPassword(e.target.value)} />
-                           
+                                    value={profile.profession}
+                                    onChange={(e) => setProfile({ ...profile, profession: e.target.value })} />
                             </div>
-                            </div>
-                            
-                            
-                            {/* <div className="mt-10">
-          <Button text={'Register'} setButtonClicked={buttonClicked} />
-        </div> */}
-
-
-                        </form>
-
-                    </div>
-
-                </section>
-            </div>
-            </div>
-            <Footer />
-        </main>
+                        </div>
+                        <div className="mt-10">
+                            {edit && <Button text={'Save Changes'} setButtonClicked={buttonClicked} />}
+                            {msg && <Alert alert={alert} />}
+                        </div>
+                    </form>
+                </div>
+            </main>
 
 
 
 
-    </>
+
+
+
+        </>
+    )
 }
 
 export default Profile

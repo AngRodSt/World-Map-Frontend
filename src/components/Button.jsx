@@ -6,8 +6,8 @@ const Button = ({ text, setButtonClicked }) => {
 
   return (
     <StyledWrapper >
-      <button className={`poiret-one-regular ${setButtonClicked? 'after:bg-amber-200 bg-amber-200' : 'after:bg-amber-400'} `}
-        type='submit' disabled={setButtonClicked}>
+      <button className={` ${setButtonClicked? 'after:bg-amber-200 bg-amber-200 pointer-events-none' : 'after:bg-amber-400 bg-gray-700'} `}
+        type='submit' disabled={setButtonClicked? true : false}>
 
         <span className='flex justify-center items-center gap-5 '>
           {setButtonClicked && (
@@ -38,7 +38,7 @@ const StyledWrapper = styled.div`
     position: relative;
     display: flex;
     width: 100%;
-    background: black;
+    
     justify-content: center;
     align-items: center;
     border-radius: 5px;
@@ -47,7 +47,7 @@ const StyledWrapper = styled.div`
     box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid #ffbf00;
+    
   }
 
   button:after {
