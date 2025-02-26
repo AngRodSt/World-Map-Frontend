@@ -10,6 +10,7 @@ const WorldMapProvider = ({ children }) => {
     const [country, setCountry] = useState([])
 
     const [notes, setNotes] = useState([])
+    const [notesFiltered, setNotesFiltered] = useState([])
     const[note, setNote] = useState([])
 
 
@@ -25,8 +26,6 @@ const WorldMapProvider = ({ children }) => {
                 Authorization: `Bearer ${token}`
             }
         }
-
-
             try {
                 const { data } = await axiosClient('/country', config)
                 setCountrys(data);
@@ -58,6 +57,7 @@ const WorldMapProvider = ({ children }) => {
         getNotes()
     }, [auth])
 
+
     const saveCountry = async (country) => {
         const token = localStorage.getItem('MapToken');
         if (!token) return;
@@ -68,9 +68,6 @@ const WorldMapProvider = ({ children }) => {
                 Authorization: `Bearer ${token}`
             }
         }
-
-
-        
         if (country.id) {
             
             try {
@@ -151,6 +148,24 @@ const WorldMapProvider = ({ children }) => {
         setNote(note)
     }
 
+    const filterNotes = async(params) => {
+        const token = localStorage.getItem('MapToken');
+        if (!token) return;
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axiosClient.post('/notes/filter', params, config)
+            setNotesFiltered(data)
+        } catch (error) {
+            
+        }
+    }
     const deleteNote = async(id)=>{
         const token = localStorage.getItem('MapToken');
         if (!token) return;
@@ -173,7 +188,7 @@ const WorldMapProvider = ({ children }) => {
 
     
     return (
-        <WorldMapContext.Provider value={{ countrys, setNotes, setCountry, saveCountry, deleteCountry, editNote, note, setNote, notes, saveNote, deleteNote }}>
+        <WorldMapContext.Provider value={{ countrys, setNotes, setCountry, saveCountry, deleteCountry, editNote, note, setNote, notes, saveNote, deleteNote, filterNotes, notesFiltered }}>
             {children}
         </WorldMapContext.Provider>
     )

@@ -37,6 +37,7 @@ const Worldmap = () => {
         fechData();
     }, [])
 
+
     const handleAccept = (newColor) => {
         let selectedId = null
         for (let i = 0; i < countrys.length; i++) {
