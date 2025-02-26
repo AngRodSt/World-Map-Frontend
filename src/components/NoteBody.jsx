@@ -43,7 +43,7 @@ const Note = ({ note, }) => {
             }
         }
         getFlag()
-    }, [])
+    }, [note])
 
     
 
@@ -57,7 +57,7 @@ const Note = ({ note, }) => {
     return (
         <>
            
-            <div className=" bg-gray-200 rounded-lg  overflow-hidden transition ease-in-out" style={{
+            <div data-aos="fade-up" className=" bg-gray-200 rounded-lg  overflow-hidden transition ease-in-out" style={{
                 boxShadow: 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset',
             }}>
                 <div className="   grid grid-cols-1 grid-rows-1 relative w-full h-full overflow-hidden">

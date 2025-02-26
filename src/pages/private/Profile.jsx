@@ -39,8 +39,6 @@ const Profile = () => {
         setPreview(URL.createObjectURL(e.target.files[0]))
         setProfile({ ...profile, avatar: e.target.files[0] })
         setAvatarExist(false)
-
-
     }
 
     const handleSubmit = async (e) => {
@@ -51,7 +49,7 @@ const Profile = () => {
         try {
             setButtonClicked(true)
             await updateProfile(profile)
-            
+
         } catch (error) {
             console.log(error)
         }
@@ -77,8 +75,6 @@ const Profile = () => {
                             <label htmlFor="avatar" className="w-[6rem] h-[6rem] flex justify-center items-center">
                                 {avatarExist ?
                                     <img src={`data:${profile.avatar.contentType};base64,${profile.avatar.data}`} /> : preview ? <img src={preview} alt="" className={`${edit ? 'opacity-50' : ''} hover:opacity-100 transition-all ease-out`} /> : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke='black' strokeLinecap="round" strokeLinejoin="round" width="48" height="48" strokeWidth="2"> <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path> </svg>}
-
-
                             </label>
                         </div>
                         <input
