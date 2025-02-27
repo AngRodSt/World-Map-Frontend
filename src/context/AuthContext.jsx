@@ -69,8 +69,17 @@ const AuthProvider = ({children}) => {
         
     }
 
+    const sendEmailResetPassword = async(email) => {
+        try {
+            const { data }  = await axiosClient.post('/resetPassword', email)
+            return data
+        } catch (error) {
+            return error.response.data.msg
+        }
+    }
+
     return(
-        <AuthContext.Provider value={{auth, setAuth, charging, logOut, updateProfile}}>
+        <AuthContext.Provider value={{auth, setAuth, charging, logOut, updateProfile, sendEmailResetPassword}}>
             {children}
         </AuthContext.Provider>
     )

@@ -10,7 +10,7 @@ const Profile = () => {
 
     useEffect(() => {
         const watchAvatar = () => {
-            if (auth.avatar) {
+            if (auth.avatar.data !== null) {
                 setAvatarExist(true)
             }
         }

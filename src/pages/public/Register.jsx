@@ -110,9 +110,9 @@ const Register = () => {
         </div>
 
         <nav className="mt-2 lg:flex lg:justify-between">
-          <p className="text-gray-200 block text-center">
+        <Link to="/" className="text-gray-200 block text-cente hover:scale-110 transition-all ease-in-out duration-200">
             Do you have an account already? {""}
-            <Link to="/">Login! </Link></p>
+            <span className="text-amber-500 font-extrabold ">Login </span></Link>
         </nav>
       </form>
 
