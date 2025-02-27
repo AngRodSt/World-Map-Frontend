@@ -32,7 +32,7 @@ const ConfirmAccount = () => {
         <>
             {!charging && <Alert alert={alert} />}
 
-            <div className="mt-10">
+            <div className="mt-10 w-full">
                 {verified && 
                 (<Link to="/"> {<Button text={'Login! →'}/>}</Link>
                 )}

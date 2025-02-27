@@ -14,12 +14,12 @@ const Login = () => {
   const [buttonClicked, setButtonClicked] = useState(false)
   const navigate = useNavigate()
 
-  const {auth, setAuth} = useAuth()
+  const { auth, setAuth } = useAuth()
 
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if([email, password].includes('')){
+
+    if ([email, password].includes('')) {
       return setAlert({
         msg: 'All field are mandatory',
         error: true
@@ -28,10 +28,10 @@ const Login = () => {
     setButtonClicked(true)
     try {
       const url = '/login'
-      const {data} = await axiosClient.post(url, {email, password})
+      const { data } = await axiosClient.post(url, { email, password })
       localStorage.setItem('MapToken', data.token)
       setAuth(data)
-      
+
       navigate('/worldmap')
     } catch (error) {
       setAlert({
@@ -42,50 +42,54 @@ const Login = () => {
     setButtonClicked(false)
   }
 
-  const {msg} = alert
+  const { msg } = alert
 
   return (
     <>
-    {msg && <Alert alert={alert} />}
-    <form onSubmit={handleSubmit} className="w-full mt-5 ">
-            <div>
-              <label htmlFor="email"
-                className="font-bold text-white text-xl block">
-                E-mail
-              </label>
-              <input id="email" type="email"
-                className="border p-3 mt-3 w-full bg-gray-50 rounded-lg"
-                placeholder="E-mail" autoComplete="username"
-                value={email}
-                onChange={(e)=> setEmail(e.target.value)} />
-            </div>
+      {msg && <Alert alert={alert} />}
+      <form onSubmit={handleSubmit} className="w-full mt-5 ">
+        <div>
+          <label htmlFor="email"
+            className="font-bold text-white text-xl block">
+            E-mail
+          </label>
+          <input id="email" type="email"
+            className="border p-3 mt-3 w-full bg-gray-50 rounded-lg"
+            placeholder="E-mail" autoComplete="username"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} />
+        </div>
 
-            <div className="mt-4">
-              <label htmlFor="password"
-                className="font-bold text-white text-xl block">
-                Password
-              </label>
-              <input id="password" type="password"
-                className="border p-3 mt-3 w-full bg-gray-50 rounded-lg"
-                placeholder="Password" autoComplete="current-password"
-                value={password}
-                onChange={(e)=> setPassword(e.target.value)} />
-            </div>
-             <div className={` items-center flex-col justify-center  mt-10`}>
-              
-            </div> 
-            <div className="mt-10">
-              <Button text={"Login"} setButtonClicked={buttonClicked}/>
+        <div className="mt-4">
+          <label htmlFor="password"
+            className="font-bold text-white text-xl block">
+            Password
+          </label>
+          <input id="password" type="password"
+            className="border p-3 mt-3 w-full bg-gray-50 rounded-lg"
+            placeholder="Password" autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} />
+        </div>
+        <div className={` items-center flex-col justify-center  mt-10`}>
 
-            </div>
+        </div>
+        <div className="mt-10">
+          <Button text={"Login"} setButtonClicked={buttonClicked} />
 
-            <nav className="mt-2 lg:flex lg:justify-between">
-              <p className="text-gray-200 block text-center">
-                Don't have an account? {""}
-                <Link to="/register">Register </Link></p>
-            </nav>
-            </form>
-    
+        </div>
+
+        <nav className="mt-2 lg:flex lg:justify-between">
+          <Link to="/register" className="text-gray-200 block text-cente hover:scale-110 transition-all ease-in-out duration-200">
+            Don't have an account? {""}
+            <span className="text-amber-500 font-extrabold ">Register </span></Link>
+          <Link to="/resetPassword" className="text-gray-200 block text-cente hover:scale-110 transition-all ease-in-out duration-200">
+            Do you forgot your {""}
+            <span className="text-amber-500 font-extrabold ">password?</span></Link>
+
+        </nav>
+      </form>
+
     </>
   )
 }
