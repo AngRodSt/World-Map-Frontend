@@ -3,9 +3,10 @@ import useWorldMap from "../../hooks/useWorldMap"
 import Note from "../../components/NoteBody"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import ReactPaginate from 'react-paginate'
 
 
-const Notes = () => {
+export default function Notes() {
   const { notes, filterNotes, notesFiltered } = useWorldMap()
   const [countries, setCountries] = useState([])
   const [selectedFilter, setSelectedFilter] = useState({
@@ -76,18 +77,77 @@ const Notes = () => {
           </section>
 
         </div>
-        <section className="grid xl:grid-cols-5 font-bold lg:grid-cols-3 md:grid-cols-2  grid-cols-1 m-10 gap-5 ">
+        
           {selectedFilter.country !== '' || selectedFilter.date !== ''
             ? (notesFiltered.length > 0
-              ? notesFiltered.map((note, index) => <Note key={index} note={note} />)
-              : !charging && <p>Doesn't exist notes with this filter</p>)
-            : notes.map((note, index) => <Note key={index} note={note} />)
-          }
-        </section>
+              ? (<Paginator notes={notesFiltered} />) 
+              : !charging && <p className="m-10 font-bold">Doesn't exist notes with this filter</p>)
+            : (<Paginator notes={notes} />) }
       </main>
     </>
   )
+}
 
+const Paginator = ({ notes }) => {
+
+  function Items({ currentItems }) {
+    return (
+      <>
+        {currentItems &&
+          currentItems.map((note, index) => (
+            <Note key={index} note={note} />
+          ))}
+      </>
+    );
+  }
+
+  function PaginatedItems({ itemsPerPage }) {
+    const [itemOffset, setItemOffset] = useState(0);
+
+    const endOffset = itemOffset + itemsPerPage;
+    const currentItems = notes.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(notes.length / itemsPerPage);
+
+    const handlePageClick = (event) => {
+      const newOffset = (event.selected * itemsPerPage) % notes.length;
+
+      setItemOffset(newOffset)
+    }
+
+    return (
+      <>
+        <section className="grid xl:grid-cols-5 font-bold lg:grid-cols-3 md:grid-cols-2  grid-cols-1 m-10 gap-5 ">
+          <Items currentItems={currentItems} /> 
+        </section>
+        <ReactPaginate
+          breakLabel='...'
+          nextLabel='next >'
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          pageCount={pageCount}
+          previousLabel='< previous'
+          renderOnZeroPageCount={null}
+          pageClassName=" p-2 border-2 border-amber-400 hover:scale-105 transition-all ease-in-out duration-200 font-bold"
+          pageLinkClassName=" p-2"
+          previousClassName="border-2 border-amber-400 p-2 hover:scale-105 transition-all ease-in-out duration-200 font-bold"
+          previousLinkClassName=" p-2 "
+          nextClassName=" p-2 border-2 border-amber-400 hover:scale-105 transition-all ease-in-out duration-200 font-bold"
+          nextLinkClassName=" p-2 "
+          breakClassName="bg-blue-200"
+          breakLinkClassName=""
+          containerClassName="flex justify-center items-center  pb-10 "
+          activeClassName="active bg-amber-400"
+        />
+      </>
+    )
+  }
+
+  return (
+    <>
+      <div>
+        <PaginatedItems itemsPerPage={15} />
+      </div>
+
+    </>)
 
 }
-export default Notes
