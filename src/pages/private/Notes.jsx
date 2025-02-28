@@ -46,7 +46,7 @@ const Notes = () => {
         console.log(error)
       }
       setCharging(false)
-      
+
     }
     fillFilter()
 
@@ -55,33 +55,35 @@ const Notes = () => {
 
   return (
     <>
-      <div className="bg-amber-400 p-2  rounded-lg shadow-xl flex  m-10 flex-col">
-        <label htmlFor="countryFilter" className="font-bold mb-3">Filter By </label>
-        <section className="flex gap-2 flex-col sm:flex-row">
-          <div className="flex ">
-            {countries && <select name="countryFilter" value={selectedFilter.country || ""} id="countryFilter" onChange={(e) => { setSelectedFilter({ ...selectedFilter, country: e.target.value }) }} className=" p-2 rounded-md w-full max-w-50  ">
-              <option disabled value=''>Countrys</option>
-              {countries.map((country) => (
-                <option key={country} value={country}>{country}</option>
-              ))}
-            </select>}
-            {selectedFilter.country && <button className=" font-bold m-2 px-2 rounded-full bg-blur-md bg-red-500 hover:bg-red-700" onClick={() => setSelectedFilter({ ...selectedFilter, country: '' })}>X</button>}
+      <main className="mt-10">
+        <div className="bg-amber-400 p-2   rounded-lg shadow-xl flex  m-10 flex-col">
+          <label htmlFor="countryFilter" className="font-bold mb-3">Filter By </label>
+          <section className="flex gap-2 flex-col sm:flex-row">
+            <div className="flex ">
+              {countries && <select name="countryFilter" value={selectedFilter.country || ""} id="countryFilter" onChange={(e) => { setSelectedFilter({ ...selectedFilter, country: e.target.value }) }} className=" p-2 rounded-md w-full max-w-50  ">
+                <option disabled value=''>Countrys</option>
+                {countries.map((country) => (
+                  <option key={country} value={country}>{country}</option>
+                ))}
+              </select>}
+              {selectedFilter.country && <button className=" font-bold m-2 px-2 rounded-full bg-blur-md bg-red-500 hover:bg-red-700" onClick={() => setSelectedFilter({ ...selectedFilter, country: '' })}>X</button>}
 
-          </div>
-          <div className="flex">
-            <input value={selectedFilter.date} type="date" name="dateFilter" id="dateFilter" className="p-2 rounded-md w-full max-w-50 " onChange={(e) => setSelectedFilter({ ...selectedFilter, date: e.target.value })} />
-            {selectedFilter.date && <button className=" font-bold m-2 px-2 rounded-full bg-blur-md bg-red-500 hover:bg-red-700" onClick={() => setSelectedFilter({ ...selectedFilter, date: '' })}>X</button>}
-          </div>
+            </div>
+            <div className="flex">
+              <input value={selectedFilter.date} type="date" name="dateFilter" id="dateFilter" className="p-2 rounded-md w-full max-w-50 " onChange={(e) => setSelectedFilter({ ...selectedFilter, date: e.target.value })} />
+              {selectedFilter.date && <button className=" font-bold m-2 px-2 rounded-full bg-blur-md bg-red-500 hover:bg-red-700" onClick={() => setSelectedFilter({ ...selectedFilter, date: '' })}>X</button>}
+            </div>
+          </section>
+
+        </div>
+        <section className="grid xl:grid-cols-5 font-bold lg:grid-cols-3 md:grid-cols-2  grid-cols-1 m-10 gap-5 ">
+          {selectedFilter.country !== '' || selectedFilter.date !== ''
+            ? (notesFiltered.length > 0
+              ? notesFiltered.map((note, index) => <Note key={index} note={note} />)
+              : !charging && <p>Doesn't exist notes with this filter</p>)
+            : notes.map((note, index) => <Note key={index} note={note} />)
+          }
         </section>
-
-      </div>
-      <main className="grid xl:grid-cols-5 font-bold lg:grid-cols-3 md:grid-cols-2  grid-cols-1 m-10 gap-5 ">
-        {selectedFilter.country !== '' || selectedFilter.date !== ''
-          ? (notesFiltered.length > 0 
-            ? notesFiltered.map((note, index) => <Note key={index} note={note} />)
-            : !charging && <p>Doesn't exist notes with this filter</p>)
-          : notes.map((note, index) => <Note key={index} note={note} />)
-        }
       </main>
     </>
   )

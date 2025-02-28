@@ -3,17 +3,17 @@ import axiosClient from "../config/axios";
 
 const AuthContext = createContext()
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({});
     const [charging, setCharging] = useState(true)
-    
 
 
-    useEffect(()=>{
-        const authenticateUser = async()=>{
+
+    useEffect(() => {
+        const authenticateUser = async () => {
             const token = localStorage.getItem('MapToken');
 
-            if(!token){
+            if (!token) {
                 setCharging(false)
                 return;
             }
@@ -26,7 +26,7 @@ const AuthProvider = ({children}) => {
             }
 
             try {
-                const {data} = await axiosClient('/profile', config)
+                const { data } = await axiosClient('/profile', config)
                 setAuth(data.updatedUser)
 
             } catch (error) {
@@ -37,49 +37,70 @@ const AuthProvider = ({children}) => {
         }
         authenticateUser()
 
-    },[])
+    }, [])
 
-    const updateProfile = async(profile) => {
+    const updateProfile = async (profile) => {
         const token = localStorage.getItem('MapToken');
 
-            if(!token){
-                setCharging(false)
-                return;
-            }
+        if (!token) {
+            setCharging(false)
+            return;
+        }
 
-            const config = {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${token}`
-                }
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`
             }
-            try {
-               await axiosClient.post(`/profile/${profile.id}`, profile, config )
-            
-                // setAuth(data.user)
+        }
+        try {
+            await axiosClient.post(`/profile/${profile.id}`, profile, config)
+            // setAuth(data.user)
 
-            } catch (error) {
-                console.log(error.response.data.msg)
-               
-            }
+        } catch (error) {
+            console.log(error.response.data.msg)
+        }
     }
-    const logOut = ()=>{
+    const logOut = () => {
         localStorage.removeItem('MapToken')
         setAuth({})
-        
+
     }
 
-    const sendEmailResetPassword = async(email) => {
+    const sendEmailResetPassword = async (email) => {
         try {
-            const { data }  = await axiosClient.post('/resetPassword', email)
+            const { data } = await axiosClient.post('/resetPassword', email)
             return data
         } catch (error) {
             return error.response.data.msg
         }
     }
 
-    return(
-        <AuthContext.Provider value={{auth, setAuth, charging, logOut, updateProfile, sendEmailResetPassword}}>
+    const changePassword = async (info) => {
+        const token = localStorage.getItem('MapToken');
+
+        if(!token){
+            setCharging(false)
+            return;
+        }
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            await axiosClient.post('/changePassword', info, config)
+        } catch (error) {
+            throw Error('')
+        
+        }
+    }
+
+    return (
+        <AuthContext.Provider value={{ auth, setAuth, charging, logOut, updateProfile, sendEmailResetPassword, changePassword }}>
             {children}
         </AuthContext.Provider>
     )
@@ -87,7 +108,7 @@ const AuthProvider = ({children}) => {
 
 
 
-export { 
+export {
     AuthProvider
 }
 
