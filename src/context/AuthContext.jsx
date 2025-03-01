@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
 
             } catch (error) {
                 console.log(error.response.data.msg)
-                // setAuth({})
+                setAuth({})
             }
             setCharging(false)
         }
