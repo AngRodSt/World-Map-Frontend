@@ -7,6 +7,7 @@ import useAuth from "../../hooks/useAuth"
 
 
 
+
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,8 +23,9 @@ const Login = () => {
     if ([email, password].includes('')) {
       return setAlert({
         msg: 'All field are mandatory',
-        error: true
-      })
+         error: true
+       })
+      
     }
     setButtonClicked(true)
     try {

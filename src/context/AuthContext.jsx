@@ -7,8 +7,6 @@ const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({});
     const [charging, setCharging] = useState(true)
 
-
-
     useEffect(() => {
         const authenticateUser = async () => {
             const token = localStorage.getItem('MapToken');
@@ -27,7 +25,7 @@ const AuthProvider = ({ children }) => {
 
             try {
                 const { data } = await axiosClient('/profile', config)
-                setAuth(data.updatedUser)
+                setAuth(data.user)
 
             } catch (error) {
                 console.log(error.response.data.msg)

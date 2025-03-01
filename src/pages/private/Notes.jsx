@@ -1,7 +1,7 @@
 
 import useWorldMap from "../../hooks/useWorldMap"
 import Note from "../../components/NoteBody"
-import { useEffect, useState } from "react"
+import { useEffect, useState, memo } from "react"
 import axios from "axios"
 import ReactPaginate from 'react-paginate'
 
@@ -77,7 +77,6 @@ export default function Notes() {
           </section>
 
         </div>
-        
           {selectedFilter.country !== '' || selectedFilter.date !== ''
             ? (notesFiltered.length > 0
               ? (<Paginator notes={notesFiltered} />) 
@@ -88,7 +87,7 @@ export default function Notes() {
   )
 }
 
-const Paginator = ({ notes }) => {
+const Paginator = memo(({ notes }) => {
 
   function Items({ currentItems }) {
     return (
@@ -150,4 +149,4 @@ const Paginator = ({ notes }) => {
 
     </>)
 
-}
+})
