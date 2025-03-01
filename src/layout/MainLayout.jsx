@@ -12,11 +12,17 @@ const MainLayout = () => {
   return (
     <>
 
-      <Header/>
+
       <div className={`relative w-full`}>
-        {auth?._id ?? false ? <Outlet /> : <Navigate to="/" />}
+        {auth?._id ?? false ?
+          <>
+            <Header />
+            <Outlet />
+            <Footer />
+          </>
+          : <Navigate to="/" />}
       </div>
-      <Footer/>
+
 
 
     </>

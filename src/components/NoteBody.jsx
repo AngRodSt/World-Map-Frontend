@@ -25,6 +25,8 @@ const Note = ({ note, }) => {
         Modal.setAppElement('#root');
       }, []);
 
+      
+
       useEffect(() => {
         AOS.init({
           duration: 1000, 
@@ -43,21 +45,22 @@ const Note = ({ note, }) => {
             }
         }
         getFlag()
+
     }, [note])
 
     
 
     const handleEditClick = () => {
-        editNote(note)
-        setIsOpen(true)
+      editNote(note);
+      setIsOpen(true)
+        
     }
-
 
 
     return (
         <>
            
-            <div data-aos="fade-up" className=" bg-gray-200 rounded-lg  overflow-hidden transition ease-in-out" style={{
+            <div className=" bg-gray-200 rounded-lg  overflow-hidden transition ease-in-out" style={{
                 boxShadow: 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset',
             }}>
                 <div className="   grid grid-cols-1 grid-rows-1 relative w-full h-full overflow-hidden">
@@ -89,7 +92,7 @@ const Note = ({ note, }) => {
                     </div>
                 </div>
             </div>
-            {confirmIsOpen && <ConfirmModal onClose={()=> setConfirmIsOpen(false)} onConfirmDelete={()=> deleteNote(_id)}/>}
+            {confirmIsOpen && <ConfirmModal onClose={()=> setConfirmIsOpen(false)} onConfirmDelete={()=> {deleteNote(_id)}}/>}
             <Modal
                 isOpen={isOpen}
                 onRequestClose={handleCloseModal}
@@ -128,66 +131,6 @@ const Note = ({ note, }) => {
         </>
     )
 }
-const StyledWrapper = styled.div`
-  
-  .cookie-heading {
-    color: rgb(34, 34, 34);
-    font-weight: 800;
-  }
-  .cookie-para {
-    font-size: 11px;
-    font-weight: 400;
-    color: rgb(51, 51, 51);
-  }
-  .button-wrapper {
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  .cookie-button {
-    padding: 8px 0;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .accept {
-    background-color: rgb(34, 34, 34);
-    color: white;
-  }
-  .reject {
-    background-color: #ececec;
-    color: rgb(34, 34, 34);
-  }
-  .accept:hover {
-    background-color: rgb(0, 0, 0);
-  }
-  .reject:hover {
-    background-color: #ddd;
-  }
-  .exit-button {
-   
-    top: 17px;
-    right: 17px;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .exit-button:hover {
-    background-color: #ddd;
-    color: white;
-  }
-  .svgIconCross {
-    height: 10px;
-  }`;
 
 
 export default Note
