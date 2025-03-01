@@ -107,7 +107,6 @@ const ChangeProfile = () => {
     useEffect(() => {
         const watchAvatar = () => {
           if (auth && auth.avatar?.data && auth.avatar?.contentType) {
-            setAvatar(auth.avatar)
             setAvatarExist(true);
           }
         }
