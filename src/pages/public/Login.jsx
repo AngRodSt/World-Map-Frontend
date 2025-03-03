@@ -6,8 +6,6 @@ import axiosClient from "../../config/axios"
 import useAuth from "../../hooks/useAuth"
 
 
-
-
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -15,7 +13,7 @@ const Login = () => {
   const [buttonClicked, setButtonClicked] = useState(false)
   const navigate = useNavigate()
 
-  const { auth, setAuth } = useAuth()
+  const { setAuth } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,10 +80,10 @@ const Login = () => {
         </div>
 
         <nav className="mt-2 lg:flex lg:justify-between">
-          <Link to="/register" className="text-gray-200 block text-cente hover:scale-110 transition-all ease-in-out duration-200">
+          <Link to="/register" className="text-gray-200 block text-cente hover:scale-105 transition-all ease-in-out duration-200">
             Don't have an account? {""}
             <span className="text-amber-500 font-extrabold ">Register </span></Link>
-          <Link to="/resetPassword" className="text-gray-200 block text-cente hover:scale-110 transition-all ease-in-out duration-200">
+          <Link to="/resetPassword" className="text-gray-200 block text-cente hover:scale-105 transition-all ease-in-out duration-200">
             Do you forgot your {""}
             <span className="text-amber-500 font-extrabold ">password?</span></Link>
 

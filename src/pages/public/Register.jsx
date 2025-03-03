@@ -4,12 +4,26 @@ import Button from "../../components/Button"
 import { useState } from "react"
 import axiosClient from "../../config/axios"
 
-const Register = () => {
+export default function Register() {
+
   const [alert, setAlert] = useState({})
+  const { msg } = alert
+  
+  return (
+    <>
+      {msg && <Alert alert={alert} />}
+      <RegisterForm setAlert={setAlert}/>
+    </>
+  )
+}
+
+const RegisterForm = ({setAlert}) => {
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
+
   const [buttonClicked, setButtonClicked] = useState(false)
 
   const handleSubmit = async (e) => {
@@ -54,11 +68,9 @@ const Register = () => {
     setButtonClicked(false)
   }
 
-  const { msg } = alert
   return (
     <>
-      {msg && <Alert alert={alert} />}
-      <form onSubmit={handleSubmit} className="w-full">
+    <form onSubmit={handleSubmit} className="w-full">
         <div>
           <label htmlFor="name"
             className="font-bold text-white text-xl block">
@@ -110,14 +122,13 @@ const Register = () => {
         </div>
 
         <nav className="mt-2 lg:flex lg:justify-between">
-        <Link to="/" className="text-gray-200 block text-cente hover:scale-110 transition-all ease-in-out duration-200">
+          <Link to="/" className="text-gray-200 block text-cente hover:scale-105 transition-all ease-in-out duration-200">
             Do you have an account already? {""}
             <span className="text-amber-500 font-extrabold ">Login </span></Link>
         </nav>
       </form>
-
     </>
   )
 }
 
-export default Register
+
