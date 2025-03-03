@@ -13,7 +13,8 @@ import ResetPassword from "./pages/public/ResetPassword"
 import ConfirmNewPassword from "./pages/public/ConfirmNewPassword"
 import ConfirmAccount from "./pages/public/ConfirmAccount"
 import { AuthProvider } from "./context/AuthContext"
-import { WorldMapProvider } from "./context/WorldMapContext"
+import { CountryProvider } from "./context/CountryContext"
+import { NotesProvider } from "./context/NotesContext"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import PublicLayout from "./layout/PublicLayout"
@@ -28,7 +29,8 @@ function App() {
     <>
       <BrowserRouter>
         <AuthProvider>
-          <WorldMapProvider>
+          <CountryProvider>
+            <NotesProvider>
           <Routes>
             <Route path="/" element={<PublicLayout />}>
               {<Route index element={<Login />} />}
@@ -46,10 +48,9 @@ function App() {
               {<Route index element={<Profile />} />}
               {<Route path="notes" element={<Notes />} />}
             </Route>
-
-
           </Routes>
-          </WorldMapProvider>
+          </NotesProvider>
+          </CountryProvider>
         </AuthProvider>
       </BrowserRouter>
     </>

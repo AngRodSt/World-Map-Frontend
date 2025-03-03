@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
                 console.log(error.response.data.msg)
                 setAuth({})
             }
+
             setCharging(false)
         }
         authenticateUser()
@@ -53,16 +54,16 @@ const AuthProvider = ({ children }) => {
         }
         try {
             await axiosClient.post(`/profile/${profile.id}`, profile, config)
-            // setAuth(data.user)
+            setAuth(data.user)
 
         } catch (error) {
             console.log(error.response.data.msg)
         }
     }
+
     const logOut = () => {
         localStorage.removeItem('MapToken')
         setAuth({})
-
     }
 
     const sendEmailResetPassword = async (email) => {
@@ -93,7 +94,6 @@ const AuthProvider = ({ children }) => {
             await axiosClient.post('/changePassword', info, config)
         } catch (error) {
             throw Error('')
-        
         }
     }
 
@@ -104,9 +104,8 @@ const AuthProvider = ({ children }) => {
     )
 }
 
-
-
-export {
+export 
+{
     AuthProvider
 }
 

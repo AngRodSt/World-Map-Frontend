@@ -1,5 +1,4 @@
-
-import useWorldMap from "../../hooks/useWorldMap"
+import useNotes from "../../hooks/useNotes"
 import Note from "../../components/NoteBody"
 import { useEffect, useState, memo } from "react"
 import axios from "axios"
@@ -7,7 +6,7 @@ import ReactPaginate from 'react-paginate'
 
 
 export default function Notes() {
-  const { notes, filterNotes, notesFiltered } = useWorldMap()
+  const { notes, filterNotes, notesFiltered } = useNotes()
   const [countries, setCountries] = useState([])
   const [selectedFilter, setSelectedFilter] = useState({
     country: '',
@@ -16,14 +15,14 @@ export default function Notes() {
   const [charging, setCharging] = useState(false)
 
   useEffect(() => {
-    async function fechData() {
+    async function fetchData() {
       const countries = new Set()
       try {
         const url = 'https://r2.datahub.io/clvyjaryy0000la0cxieg4o8o/main/raw/data/countries.geojson'
         const response = await axios(url);
         let geoData = response.data.features
-        for (let feature in geoData) {
-          countries.add(geoData[feature].properties.ADMIN)
+        for (let feature of geoData) {
+          countries.add(feature.properties.ADMIN);
         }
         const arrCountry = Array.from(countries)
         setCountries(arrCountry.sort())
@@ -32,7 +31,7 @@ export default function Notes() {
         console.log(error)
       }
     }
-    fechData();
+    fetchData();
   }, [])
 
 
@@ -40,14 +39,13 @@ export default function Notes() {
     const fillFilter = async () => {
       setCharging(true)
       try {
-        if (selectedFilter.country || selectedFilter.date) {
+        if (selectedFilter?.country || selectedFilter?.date) {
           await filterNotes(selectedFilter)
         }
       } catch (error) {
         console.log(error)
       }
       setCharging(false)
-
     }
     fillFilter()
 
@@ -75,7 +73,6 @@ export default function Notes() {
               {selectedFilter.date && <button className=" font-bold m-2 px-2 rounded-full bg-blur-md bg-red-500 hover:bg-red-700" onClick={() => setSelectedFilter({ ...selectedFilter, date: '' })}>X</button>}
             </div>
           </section>
-
         </div>
           {selectedFilter.country !== '' || selectedFilter.date !== ''
             ? (notesFiltered.length > 0
@@ -86,6 +83,7 @@ export default function Notes() {
     </>
   )
 }
+
 
 const Paginator = memo(({ notes }) => {
 

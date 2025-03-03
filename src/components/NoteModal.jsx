@@ -1,27 +1,22 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Alert from "./Alert";
-import useWorldMap from "../hooks/useWorldMap";
+import useNotes from "../hooks/useNotes";
 import Button from "./Button";
-
-
 
 
 const NoteModal = ({ countryName, countryCode, setIsOpen }) => {
   const [alert, setAlert] = useState([])
-  const { saveNote, note, setNote } = useWorldMap()
+  const { saveNote, note, setNote } = useNotes()
   const { country, message, name, code, _id } = note
-  const MAX_WORDS = 50;
+  const MAX_WORDS = 100;
   const [noteLocal, setNoteLocal] = useState({
     message: message || '',
     country: country || '',
     name: name || '',
     code: code || '',
     id: _id || null
-
   })
   const [buttonClicked, setButtonClicked] = useState(false)
-
-
 
   useEffect(() => {
     setNoteLocal({ ...noteLocal, country: countryName, code: countryCode })
@@ -37,10 +32,11 @@ const NoteModal = ({ countryName, countryCode, setIsOpen }) => {
       const limitedText = words.slice(0, MAX_WORDS).join(' ');
       setNoteLocal({ ...noteLocal, message: limitedText });
     }
-
   }
 
-  const wordCount = noteLocal.message.trim().split(/\s+/).filter(Boolean).length;
+  const wordCount = useMemo(()=>{
+    return noteLocal.message.trim().split(/\s+/).filter(Boolean).length;
+  },[noteLocal.message])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -73,9 +69,6 @@ const NoteModal = ({ countryName, countryCode, setIsOpen }) => {
       setNote({})
     }, 1000);
 
-
-
-
   }
 
   const { msg } = alert
@@ -94,7 +87,6 @@ const NoteModal = ({ countryName, countryCode, setIsOpen }) => {
           <p className="text-gray-400 mb-4 text-sm">Words: {wordCount}/{MAX_WORDS}</p>
           <Button type="submit" text={`${Object.keys(note).length ? 'Edit Note' : 'Add Note'}`} setButtonClicked={buttonClicked} />
         </form>
-
       </div>
     </>
   )

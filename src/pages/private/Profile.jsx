@@ -21,84 +21,6 @@ export default function Profile() {
     )
 }
 
-const ChangePassword = () => {
-    const { changePassword } = useAuth()
-    const [form, setForm] = useState({
-        currentPassword: '',
-        newPassword: ''
-    })
-    const [buttonClicked, setButtonClicked] = useState(false)
-    const [alert, setAlert] = useState({})
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const { currentPassword, newPassword } = form
-
-        if (currentPassword === '' || newPassword === '') {
-            return setAlert({
-                msg: 'All fields are mandatory',
-                error: true
-            })
-        }
-        if (newPassword.length < 6) {
-            return setAlert({
-                msg: 'New Password is too short ',
-                error: true
-            })
-        }
-        setAlert({})
-        try {
-            setButtonClicked(true)
-            await changePassword(form)
-            setAlert({
-                msg: 'Password Updated successully'
-            })
-            setTimeout(() => {
-                setForm({ currentPassword: '', newPassword: '' })
-                setAlert({})
-            }, 2000);
-        } catch (error) {
-            setAlert({
-              msg: 'Password Incorrect',
-              error: true
-            })
-          }
-        setButtonClicked(false)
-
-
-    }
-
-    const { msg } = alert
-    return (
-        <>
-            <form className="w-full mt-24 " onSubmit={handleSubmit}>
-
-                <div className="flex flex-col justify-center items-center">
-                    <label htmlFor="currentPassword"
-                        className="font-bold block"> Current Password </label>
-                    <input id="currentPassword" type="password"
-                        className={`'bg-gray-50'  border p-2 mt-3  lg:w-1/3 w-full  rounded-lg`}
-                        placeholder="Current Password" autoComplete="username"
-                        value={form.currentPassword}
-                        onChange={(e) => setForm({ ...form, currentPassword: e.target.value })} />
-
-                    <label htmlFor="NewPassword"
-                        className="font-bold block mt-5"> New Password </label>
-                    <input id="NewPassword" type="password"
-                        className={` 'bg-gray-50'  border p-2 mt-3  lg:w-1/3 w-full rounded-lg`}
-                        placeholder="New Password" autoComplete="username"
-                        value={form.newPassword}
-                        onChange={(e) => setForm({ ...form, newPassword: e.target.value })} />
-                    <div className="mt-10 lg:w-1/3 w-full ">
-                        <Button text={'Save'} setButtonClicked={buttonClicked} />
-                        {msg && <Alert alert={alert} />}
-                    </div>
-                </div>
-
-            </form>
-        </>)
-}
-
 const ChangeProfile = () => {
     const { auth, updateProfile } = useAuth()
     const [alert, setAlert] = useState({})
@@ -106,13 +28,13 @@ const ChangeProfile = () => {
 
     useEffect(() => {
         const watchAvatar = () => {
-          if (auth && auth.avatar?.data && auth.avatar?.contentType) {
-            setAvatarExist(true);
-          }
+            if (auth && auth.avatar?.data && auth.avatar?.contentType) {
+                setAvatarExist(true);
+            }
         }
         watchAvatar()
-    
-      }, [auth])
+
+    }, [auth])
 
 
     const [profile, setProfile] = useState({
@@ -251,6 +173,84 @@ const ChangeProfile = () => {
             </div>
         </>
     )
+}
+
+const ChangePassword = () => {
+    const { changePassword } = useAuth()
+    const [form, setForm] = useState({
+        currentPassword: '',
+        newPassword: ''
+    })
+    const [buttonClicked, setButtonClicked] = useState(false)
+    const [alert, setAlert] = useState({})
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const { currentPassword, newPassword } = form
+
+        if (currentPassword === '' || newPassword === '') {
+            return setAlert({
+                msg: 'All fields are mandatory',
+                error: true
+            })
+        }
+        if (newPassword.length < 6) {
+            return setAlert({
+                msg: 'New Password is too short ',
+                error: true
+            })
+        }
+        setAlert({})
+        try {
+            setButtonClicked(true)
+            await changePassword(form)
+            setAlert({
+                msg: 'Password Updated successully'
+            })
+            setTimeout(() => {
+                setForm({ currentPassword: '', newPassword: '' })
+                setAlert({})
+            }, 2000);
+        } catch (error) {
+            setAlert({
+                msg: 'Password Incorrect',
+                error: true
+            })
+        }
+        setButtonClicked(false)
+
+
+    }
+
+    const { msg } = alert
+    return (
+        <>
+            <form className="w-full mt-24 " onSubmit={handleSubmit}>
+
+                <div className="flex flex-col justify-center items-center">
+                    <label htmlFor="currentPassword"
+                        className="font-bold block"> Current Password </label>
+                    <input id="currentPassword" type="password"
+                        className={`'bg-gray-50'  border p-2 mt-3  lg:w-1/3 w-full  rounded-lg`}
+                        placeholder="Current Password" autoComplete="username"
+                        value={form.currentPassword}
+                        onChange={(e) => setForm({ ...form, currentPassword: e.target.value })} />
+
+                    <label htmlFor="NewPassword"
+                        className="font-bold block mt-5"> New Password </label>
+                    <input id="NewPassword" type="password"
+                        className={` 'bg-gray-50'  border p-2 mt-3  lg:w-1/3 w-full rounded-lg`}
+                        placeholder="New Password" autoComplete="username"
+                        value={form.newPassword}
+                        onChange={(e) => setForm({ ...form, newPassword: e.target.value })} />
+                    <div className="mt-10 lg:w-1/3 w-full ">
+                        <Button text={'Save'} setButtonClicked={buttonClicked} />
+                        {msg && <Alert alert={alert} />}
+                    </div>
+                </div>
+
+            </form>
+        </>)
 }
 
 

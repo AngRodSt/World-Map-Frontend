@@ -1,8 +1,8 @@
-import { MapContainer, TileLayer, GeoJSON, Tooltip } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import axios from 'axios';
 import { useMemo, useEffect, useState } from 'react';
 import ModalStructure from './ModalStructure';
-import useWorldMap from '../hooks/useWorldMap';
+import useCountry from '../hooks/useCountry';
 
 const Worldmap = () => {
     const [geoData, setGeoData] = useState(null)
@@ -13,7 +13,7 @@ const Worldmap = () => {
     const [selectedColor, setSelectedColor] = useState('#fff')
 
 
-    const { saveCountry, countrys, deleteCountry } = useWorldMap()
+    const { saveCountry, countrys, deleteCountry } = useCountry()
 
     const arrCountry = useMemo(() => {
         return countrys.reduce((acc, item) => {
@@ -39,12 +39,10 @@ const Worldmap = () => {
 
 
     const handleAccept = (newColor) => {
-        let selectedId = null
-        for (let i = 0; i < countrys.length; i++) {
-            if (countrys[i].country === selectedCountryName) {
-                selectedId = countrys[i]._id
-                break;
-            }
+        let selectedId;
+        const countryToSave = countrys.find(country => country.country === selectedCountryName)
+        if (countryToSave) {
+            selectedId = countryToSave._id
         }
         saveCountry({
             country: selectedCountryName,
@@ -55,27 +53,19 @@ const Worldmap = () => {
     }
 
     const handleDelete = () => {
-        let selectedId = null
-        for (let i = 0; i < countrys.length; i++) {
-            if (countrys[i].country === selectedCountryName) {
-                selectedId = countrys[i]._id
-                deleteCountry(selectedId)
-                break;
-            }
-
+        const countryToDelete = countrys.find(country => country.country === selectedCountryName)
+        if (countryToDelete) {
+            const selectedId = countryToDelete._id
+            deleteCountry(selectedId)
         }
         setModalIsOpen(false)
     }
 
     const onEachCountry = (feature, layer) => {
-
-        const countryName = feature.properties.ADMIN
-
         layer.setStyle(getCountryStyle(feature))
-
-
         layer.on({
             click: () => {
+                const countryName = feature.properties.ADMIN
                 setSelectedCountryName(countryName);
                 setSelectedCountryCode(feature.properties.ISO_A2);
                 const country = extractCountry(countryName);
@@ -86,9 +76,6 @@ const Worldmap = () => {
         });
     }
 
-    /*
-    * useMemo memoizes getCountryStyle to prevent unnecessary recalculations.
-    */
     const getCountryStyle = useMemo(() => {
         return (feature) => {
             const countryName = feature.properties.ADMIN;
@@ -108,17 +95,13 @@ const Worldmap = () => {
         return country;
     }
 
-    const bounds = [
-        [-85, -180],
-        [85, 180]
-    ];
-
     return (
         <>
             <div id="map" style={{ width: "100%" }}
                 className=" w-[90vh] h-[80vh] overflow-hidden ">
 
-                <MapContainer className='' center={[40.505, -0.09]} zoom={2.8} maxBounds={bounds} maxBoundsViscosity={1.0} scrollWheelZoom={false} style={{
+                <MapContainer className='' center={[40.505, -0.09]} zoom={2.8} maxBounds={[[-85, -180],
+                [85, 180]]} maxBoundsViscosity={1.0} scrollWheelZoom={false} style={{
                     width: "100%", height: "100%",
 
                 }} >
@@ -129,10 +112,7 @@ const Worldmap = () => {
                     {geoData && <GeoJSON data={geoData} onEachFeature={onEachCountry} style={getCountryStyle} />}
                 </MapContainer>
 
-
                 {modalIsOpen && <ModalStructure modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} countryName={selectedCountryName} selectedContry={selectedCountry} countryCode={selectedCountryCode} selectedColor={selectedColor} setSelectedColor={setSelectedColor} onAccept={handleAccept} onDelete={handleDelete} />}
-
-
             </div>
 
         </>
